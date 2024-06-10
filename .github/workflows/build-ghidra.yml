@@ -1,13 +1,37 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
+name: build-ghidra
+run-name: ${{ github.actor }} is building Ghidra
 on: [push]
 jobs:
   check-bats-version:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - id: keydb
+        uses: robinraju/release-downloader@v1.10
         with:
-          node-version: '20'
-      - run: npm install -g bats
-      - run: bats -v
+            # The source repository path. {owner}/{repo}
+            repository: 'NationalSecurityAgency/ghidra'
+
+            # A flag to set the download target as latest release
+            # The default value is 'false'
+            latest: true
+
+            # The name of the file to download.
+            # Use this field only to specify filenames other than tarball or zipball, if any.
+            # Supports wildcard pattern (eg: '*', '*.deb', '*.zip' etc..)
+            fileName: 'ghidra*.zip'
+
+            # Download the attached tarball (*.tar.gz)
+            tarBall: false
+
+            # Download the attached zipball (*.zip)
+            zipBall: false
+
+            # Relative path under $GITHUB_WORKSPACE to place the downloaded file(s)
+            # It will create the target directory automatically if not present
+            # eg: out-file-path: "my-downloads" => It will create directory $GITHUB_WORKSPACE/my-downloads
+            out-file-path: 'releases'
+
+            # A flag to set if the downloaded assets are archives and should be extracted
+            # Checks all downloaded files if they end with zip, tar or tar.gz and extracts them, if true.
+            # Prints a warning if enabled but file is not an archive - but does not fail.
+            extract: true

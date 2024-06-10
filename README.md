@@ -1,1 +1,1 @@
-"# ghidra-4-windows" 
+# ghidra-4-windows

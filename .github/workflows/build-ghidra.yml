@@ -8,7 +8,7 @@ jobs:
       - id: keydb
         uses: robinraju/release-downloader@v1.10
         with:
-            # The source repository path. {owner}/{repo}
+
             repository: 'NationalSecurityAgency/ghidra'
 
             # A flag to set the download target as latest release
